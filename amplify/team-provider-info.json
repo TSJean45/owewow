@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-owewow-dev-92a00-authRole",
+      "UnauthRoleArn": "arn:aws:iam::386782865665:role/amplify-owewow-dev-92a00-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::386782865665:role/amplify-owewow-dev-92a00-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-owewow-dev-92a00-deployment",
+      "UnauthRoleName": "amplify-owewow-dev-92a00-unauthRole",
+      "StackName": "amplify-owewow-dev-92a00",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:386782865665:stack/amplify-owewow-dev-92a00/d38cd070-9626-11f0-ae88-02f71e43ce01",
+      "AmplifyAppId": "d1d1xmrcewwhmg"
+    },
+    "categories": {
+      "function": {
+        "receiptProcessor": {}
+      }
+    }
+  }
+}

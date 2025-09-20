@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/receipts": {
+      "name": "/receipts",
+      "lambdaFunction": "receiptProcessor",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
