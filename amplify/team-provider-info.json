@@ -13,7 +13,13 @@
     },
     "categories": {
       "function": {
-        "receiptProcessor": {}
+        "receiptProxy": {
+          "deploymentBucketName": "amplify-owewow-dev-92a00-deployment",
+          "s3Key": "amplify-builds/receiptProxy-4a4b687279627539364f-build.zip"
+        }
+      },
+      "api": {
+        "receipts": {}
       }
     }
   }

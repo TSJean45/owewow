@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "receiptProcessor"
+          "resourceName": "receiptProxy"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -16,10 +16,28 @@
     }
   },
   "function": {
-    "receiptProcessor": {
+    "receiptProxy": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_receiptProxy_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "receiptProxy"
+        }
+      ]
+    },
+    "AMPLIFY_function_receiptProxy_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "receiptProxy"
+        }
+      ]
     }
   }
 }

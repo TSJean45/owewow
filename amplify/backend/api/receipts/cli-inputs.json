@@ -1,9 +1,9 @@
 {
   "version": 1,
   "paths": {
-    "/receipts": {
-      "name": "/receipts",
-      "lambdaFunction": "receiptProcessor",
+    "/process": {
+      "name": "/process",
+      "lambdaFunction": "receiptProxy",
       "permissions": {
         "setting": "open"
       }
