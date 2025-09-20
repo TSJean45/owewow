@@ -15,7 +15,7 @@
       "function": {
         "receiptProxy": {
           "deploymentBucketName": "amplify-owewow-dev-92a00-deployment",
-          "s3Key": "amplify-builds/receiptProxy-4a4b687279627539364f-build.zip"
+          "s3Key": "amplify-builds/receiptProxy-36735361582f6d57726a-build.zip"
         }
       },
       "api": {
@@ -26,6 +26,12 @@
           "appId": "d1d1xmrcewwhmg",
           "type": "manual"
         }
+      },
+      "auth": {
+        "owewowff229d2b": {}
+      },
+      "storage": {
+        "owewowStorage": {}
       }
     }
   }

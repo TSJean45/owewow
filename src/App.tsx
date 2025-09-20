@@ -1,4 +1,4 @@
-// App.tsx - FINAL FIX
+// App.tsx - SEMANTIC SOLUTION (Best Practice)
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { post } from "aws-amplify/api";
@@ -31,36 +31,44 @@ const LandingPage: React.FC = () => {
   );
 };
 
-// App.tsx - FINAL FIX
+// App.tsx - Selective full-width
 function App() {
   return (
     <BrowserRouter>
-      <div
-        className="min-h-screen w-screen
- bg-gray-950 text-white overflow-x-hidden"
-      >
-        {/* Background gradient overlay */}
+      <div className="min-h-screen w-full bg-gray-950 text-white overflow-x-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-900/20 pointer-events-none" />
 
-        {/* Main content */}
         <div className="relative z-10 min-h-screen w-full">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route
               path="/split-choice"
               element={
-                <SplitChoice
-                  onChoice={(choice) => {
-                    if (choice === "quick") {
-                      window.location.href = "/quick-split";
-                    } else {
-                      alert("Sign-in flow coming soon!");
-                    }
-                  }}
-                />
+                <div className="w-screen max-w-full">
+                  {" "}
+                  {/* Full width wrapper */}
+                  <SplitChoice
+                    onChoice={(choice) => {
+                      if (choice === "quick") {
+                        window.location.href = "/quick-split";
+                      } else {
+                        alert("Sign-in flow coming soon!");
+                      }
+                    }}
+                  />
+                </div>
               }
             />
-            <Route path="/quick-split" element={<QuickSplit />} />
+            <Route
+              path="/quick-split"
+              element={
+                <div className="w-screen max-w-full">
+                  {" "}
+                  {/* Full width wrapper */}
+                  <QuickSplit />
+                </div>
+              }
+            />
           </Routes>
         </div>
       </div>
