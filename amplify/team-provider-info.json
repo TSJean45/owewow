@@ -20,6 +20,12 @@
       },
       "api": {
         "receipts": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1d1xmrcewwhmg",
+          "type": "manual"
+        }
       }
     }
   }
