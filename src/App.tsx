@@ -1,71 +1,71 @@
-// src/App.tsx - NO AUTH NEEDED
-import { useState } from "react";
+// App.tsx - FINAL FIX
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { post } from "aws-amplify/api";
 
-const App = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const [result, setResult] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+// Components
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Features from "./components/Features";
+import HowItWorks from "./components/HowItWorks";
+import Footer from "./components/Footer";
+import SplitChoice from "./components/SplitChoice";
+import QuickSplit from "./components/QuickSplit";
 
-  async function processReceipt() {
-    if (!file) return;
+// Landing Page Component
+const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
 
-    setLoading(true);
-    try {
-      const restOperation = post({
-        apiName: "receipts",
-        path: "/process",
-        options: {
-          body: {
-            object_key: file.name,
-            group_id: "public-demo", // No user needed!
-          },
-        },
-      });
-
-      const { body } = await restOperation.response;
-      setResult(await body.json());
-    } catch (error) {
-      console.error("Failed:", error);
-    }
-    setLoading(false);
-  }
+  const handleSplitReceipt = () => {
+    navigate("/split-choice");
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8">
-          🧾 OweWow Receipt Splitter
-        </h1>
-
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="block w-full mb-4 p-3 border rounded"
-          />
-
-          <button
-            onClick={processReceipt}
-            disabled={!file || loading}
-            className="w-full bg-blue-600 text-white py-3 rounded font-semibold disabled:bg-gray-400"
-          >
-            {loading ? "Processing..." : "Split This Receipt! 🤖"}
-          </button>
-        </div>
-
-        {result && (
-          <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-xl font-bold mb-4">✅ Split Results:</h3>
-            <pre className="bg-gray-100 p-4 rounded overflow-auto">
-              {JSON.stringify(result, null, 2)}
-            </pre>
-          </div>
-        )}
-      </div>
+    <div className="w-full min-h-screen">
+      <Header onSplitReceipt={handleSplitReceipt} />
+      <Hero onSplitReceipt={handleSplitReceipt} />
+      <Features />
+      <HowItWorks />
+      <Footer />
     </div>
   );
 };
+
+// App.tsx - FINAL FIX
+function App() {
+  return (
+    <BrowserRouter>
+      <div
+        className="min-h-screen w-screen
+ bg-gray-950 text-white overflow-x-hidden"
+      >
+        {/* Background gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-900/20 pointer-events-none" />
+
+        {/* Main content */}
+        <div className="relative z-10 min-h-screen w-full">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/split-choice"
+              element={
+                <SplitChoice
+                  onChoice={(choice) => {
+                    if (choice === "quick") {
+                      window.location.href = "/quick-split";
+                    } else {
+                      alert("Sign-in flow coming soon!");
+                    }
+                  }}
+                />
+              }
+            />
+            <Route path="/quick-split" element={<QuickSplit />} />
+          </Routes>
+        </div>
+      </div>
+    </BrowserRouter>
+  );
+}
 
 export default App;
