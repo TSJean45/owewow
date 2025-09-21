@@ -13,7 +13,6 @@ import {
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Features from "./components/Features";
-import HowItWorks from "./components/HowItWorks";
 import Footer from "./components/Footer";
 import SplitChoice from "./components/SplitChoice";
 import QuickSplit from "./components/QuickSplit";
@@ -60,7 +59,6 @@ const LandingPage: React.FC = () => {
       <Header onSplitReceipt={handleSplitReceipt} />
       <Hero onSplitReceipt={handleSplitReceipt} />
       <Features />
-      <HowItWorks />
       <Footer />
     </div>
   );

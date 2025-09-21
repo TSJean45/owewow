@@ -7,127 +7,95 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onSplitReceipt }) => {
   return (
-    <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-      <div className="w-full">
+    <section className="pt-20 pb-20 px-6 relative overflow-hidden bg-gradient-to-br from-gray-950 to-gray-900 text-white">
+      <div className="w-full max-w-6xl mx-auto">
         <div className="text-center relative z-10">
-          {/* Main heading with better styling */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-white via-purple-100 to-blue-100 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-snug tracking-tight">
+            <span className="bg-gradient-to-r from-white via-purple-300 to-blue-300 bg-clip-text text-transparent">
               Split Bills,
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+            </span>{" "}
+            <span className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 bg-clip-text text-transparent">
               Not Friendships
             </span>
           </h1>
 
-          {/* Better subtitle */}
-          <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Snap your receipt, AI reads everything, generates magic links.
+          {/* Subtitle */}
+          <p className="text-lg md:text-2xl text-gray-300 mb-7 max-w-3xl mx-auto leading-relaxed">
+            Snap your receipt, AI reads everything step-by-step, then share
+            magic links.
             <br />
-            <span className="text-purple-300">
-              Your friends just click & pay. That's it.
+            <span className="text-purple-300 font-semibold">
+              Your friends just click & pay — no fuss, no mistakes.
             </span>
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          {/* Call to Action */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-14">
             <button
               onClick={onSplitReceipt}
-              className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 px-8 py-4 rounded-full text-white font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/40"
+              className="group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 px-10 py-4 rounded-full text-white font-semibold text-lg transition-transform duration-300 transform hover:scale-105 shadow-lg shadow-purple-500/50 flex items-center justify-center gap-3"
+              aria-label="Upload receipt and split bill"
             >
-              <Camera className="inline-block mr-2 w-5 h-5" />
+              <Camera className="w-6 h-6" />
               Upload Receipt Now
-              <ArrowRight className="inline-block ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
-          {/* Flexible Process Flow - Two Options */}
-          <div className="mb-16 max-w-5xl mx-auto">
-            {/* Option Toggle */}
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-white mb-4">
-                Two Ways to Split
-              </h3>
-              <p className="text-gray-400">
-                Choose what works best for your situation
-              </p>
-            </div>
+          {/* Highlighted no login/download notice */}
+          <div className="mb-10 mx-auto max-w-md rounded-full bg-purple-700 bg-opacity-30 px-6 py-3 font-semibold text-white shadow-lg backdrop-blur-md select-none">
+            🚫{" "}
+            <span className="underline decoration-pink-400">No downloads</span>,
+            🚫{" "}
+            <span className="underline decoration-purple-400">No logins</span> —
+            Start instantly
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Receipt Upload Flow */}
-              <div className="bg-gray-800/30 rounded-2xl p-6 border border-gray-700/50">
-                <h4 className="text-lg font-semibold text-purple-300 mb-4">
-                  📸 Upload Receipt
-                </h4>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                      <span className="text-sm">1</span>
-                    </div>
-                    <span className="text-gray-300">
-                      Snap or upload receipt photo
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
-                      <span className="text-sm">2</span>
-                    </div>
-                    <span className="text-gray-300">
-                      AI reads all items & prices
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                      <span className="text-sm">3</span>
-                    </div>
-                    <span className="text-gray-300">
-                      Automatic split calculation
-                    </span>
-                  </div>
+          {/* Clear Step-by-Step feature */}
+          <div className="text-center max-w-4xl mx-auto">
+            <h3 className="text-3xl font-bold mb-8 tracking-tight">
+              How It Works
+            </h3>
+
+            <div className="grid md:grid-cols-3 gap-12 text-left">
+              <div className="bg-gray-800/40 rounded-xl p-6 border border-gray-700/50 space-y-3 shadow-lg">
+                <div className="text-4xl font-bold text-purple-400 text-center">
+                  1
                 </div>
+                <h4 className="text-xl font-semibold text-white text-center">
+                  Upload Receipt
+                </h4>
+                <p className="text-gray-400 text-center">
+                  Snap or upload any receipt photo.
+                </p>
               </div>
-
-              {/* Chat Flow */}
-              <div className="bg-gray-800/30 rounded-2xl p-6 border border-gray-700/50">
-                <h4 className="text-lg font-semibold text-blue-300 mb-4">
-                  💬 Just Tell Our AI
-                </h4>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                      <span className="text-sm">1</span>
-                    </div>
-                    <span className="text-gray-300">
-                      Type: "We had dim sum, $124 total"
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
-                      <span className="text-sm">2</span>
-                    </div>
-                    <span className="text-gray-300">
-                      AI asks smart follow-up questions
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                      <span className="text-sm">3</span>
-                    </div>
-                    <span className="text-gray-300">Fair split in seconds</span>
-                  </div>
+              <div className="bg-gray-800/40 rounded-xl p-6 border border-gray-700/50 space-y-3 shadow-lg">
+                <div className="text-4xl font-bold text-purple-400 text-center">
+                  2
                 </div>
+                <h4 className="text-xl font-semibold text-white text-center">
+                  AI Reads Items
+                </h4>
+                <p className="text-gray-400 text-center">
+                  Step-by-step verification for unmatched accuracy.
+                </p>
+              </div>
+              <div className="bg-gray-800/40 rounded-xl p-6 border border-gray-700/50 space-y-3 shadow-lg">
+                <div className="text-4xl font-bold text-purple-400 text-center">
+                  3
+                </div>
+                <h4 className="text-xl font-semibold text-white text-center">
+                  Get Smart Share Links
+                </h4>
+                <p className="text-gray-400 text-center">
+                  Your friends just click & pay easily.
+                </p>
               </div>
             </div>
 
-            {/* Final Step */}
-            <div className="text-center mt-8">
-              <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full border border-purple-500/20">
-                <Link className="text-blue-400 w-5 h-5 mr-2" />
-                <span className="text-white font-medium">
-                  Either way → Get shareable link for friends
-                </span>
-              </div>
+            <div className="mt-10 inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full border border-purple-500/20 mx-auto max-w-fit gap-2 text-white font-medium tracking-wide select-none text-sm">
+              <Link className="w-5 h-5 text-blue-400" />
+              Either way → Fast, easy, and accurate bill splits
             </div>
           </div>
         </div>
