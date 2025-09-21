@@ -1,6 +1,12 @@
 // App.tsx - SEMANTIC SOLUTION (Best Practice)
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { post } from "aws-amplify/api";
 
 // Components
@@ -11,8 +17,18 @@ import HowItWorks from "./components/HowItWorks";
 import Footer from "./components/Footer";
 import SplitChoice from "./components/SplitChoice";
 import QuickSplit from "./components/QuickSplit";
+import ResultsPage from "./components/results/ResultsPage";
 
-// Landing Page Component
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
@@ -35,6 +51,7 @@ const LandingPage: React.FC = () => {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen w-full bg-gray-950 text-white overflow-x-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-900/20 pointer-events-none" />
 
@@ -69,6 +86,7 @@ function App() {
                 </div>
               }
             />
+            <Route path="/results/:receiptId" element={<ResultsPage />} />
           </Routes>
         </div>
       </div>

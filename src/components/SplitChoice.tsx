@@ -11,6 +11,7 @@ import {
   Star,
   TrendingUp,
 } from "lucide-react";
+import Header from "./Header";
 
 interface SplitChoiceProps {
   onChoice: (choice: "quick" | "signin") => void;
@@ -34,30 +35,10 @@ const SplitChoice: React.FC<SplitChoiceProps> = ({ onChoice }) => {
 
   return (
     <div className="min-h-screen w-screen max-w-full flex items-center justify-center px-4 py-12 overflow-x-hidden relative">
-      {/* Enhanced Background with Floating Elements - 2025 Trend */}
-      <div
-        className="absolute inset-0 opacity-30"
-        style={{
-          transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
-        }}
-      >
-        <div className="absolute top-20 left-20 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-40 right-32 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl animate-pulse delay-1000" />
-        <div className="absolute bottom-32 left-1/3 w-40 h-40 bg-pink-500/5 rounded-full blur-3xl animate-pulse delay-2000" />
-      </div>
-
-      <div className="w-full max-w-6xl mx-auto relative z-10">
+      <Header />
+      <div className="mt-10 w-full max-w-6xl mx-auto relative z-10">
         {/* Enhanced Header with Status Badge */}
         <div className="text-center mb-12">
-          {/* Status Badge - Hackathon Appeal */}
-          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 rounded-full mb-6 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4 text-purple-400 mr-2 animate-pulse" />
-            <span className="text-sm text-purple-300 font-medium">
-              AI-Powered • Lightning Fast
-            </span>
-            <TrendingUp className="w-4 h-4 text-blue-400 ml-2" />
-          </div>
-
           <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight">
             <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
               Choose Your
