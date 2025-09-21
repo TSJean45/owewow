@@ -1,5 +1,4 @@
-// Header.tsx - SPACER FIXED
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Menu, X, Receipt } from "lucide-react";
 
 interface HeaderProps {
@@ -8,15 +7,6 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onSplitReceipt }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleSplitClick = () => {
     setIsOpen(false);
@@ -35,11 +25,9 @@ const Header: React.FC<HeaderProps> = ({ onSplitReceipt }) => {
 
   return (
     <>
-      {/* Fixed Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-gray-950/95 backdrop-blur-xl border-b border-gray-800/50">
         <nav className="w-full px-6 py-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
-            {/* Logo */}
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
                 <Receipt className="w-6 h-6 text-white" />
@@ -54,7 +42,6 @@ const Header: React.FC<HeaderProps> = ({ onSplitReceipt }) => {
               </div>
             </div>
 
-            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <button
                 onClick={() => handleNavClick("#features")}
@@ -76,7 +63,6 @@ const Header: React.FC<HeaderProps> = ({ onSplitReceipt }) => {
               </button>
             </div>
 
-            {/* Mobile menu button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden text-gray-300 hover:text-white transition-colors duration-200 relative z-60"
@@ -86,7 +72,6 @@ const Header: React.FC<HeaderProps> = ({ onSplitReceipt }) => {
           </div>
         </nav>
 
-        {/* Mobile Navigation */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
             isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
@@ -117,8 +102,7 @@ const Header: React.FC<HeaderProps> = ({ onSplitReceipt }) => {
         </div>
       </header>
 
-      {/* 🔥 MOVED OUTSIDE: Spacer to push content below fixed header */}
-      <div className="h-20"></div>
+      <div className="h-24"></div>
     </>
   );
 };

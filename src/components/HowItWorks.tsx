@@ -69,7 +69,7 @@ const HowItWorks: React.FC = () => {
                 </div>
 
                 {/* Step number for desktop */}
-                <div className="hidden lg:block w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-sm font-bold text-white mx-auto mb-4 relative z-20">
+                <div className="hidden lg:block w-8 h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full items-center justify-center text-sm font-bold text-white mx-auto mb-4 relative z-20">
                   {index + 1}
                 </div>
 

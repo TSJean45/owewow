@@ -1,5 +1,5 @@
 // App.tsx - SEMANTIC SOLUTION (Best Practice)
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -7,7 +7,7 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import { post } from "aws-amplify/api";
+// import { post } from "aws-amplify/api";
 
 // Components
 import Header from "./components/Header";

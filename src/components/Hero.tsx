@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Camera, Link, Zap } from "lucide-react";
+import { ArrowRight, Camera, Link } from "lucide-react";
 
 interface HeroProps {
   onSplitReceipt: () => void;
