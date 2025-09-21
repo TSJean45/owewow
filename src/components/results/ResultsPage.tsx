@@ -77,7 +77,6 @@ const ResultsPage: React.FC = () => {
   const [editForm, setEditForm] = useState({ name: "", amount: 0, qty: 1 });
   //   const [showAIChat, setShowAIChat] = useState(false);
   const [newItem, setNewItem] = useState({ name: "", amount: 0, qty: 1 });
-  const [showAssignment, setShowAssignment] = useState(false);
   const [showActions, setShowActions] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [showAddModal, setShowAddModal] = useState(false);
@@ -491,11 +490,11 @@ const ResultsPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen  bg-[#0a0a0a] text-white pb-32">
+    <div className="min-h-screen bg-[#0a0a0a] text-white pb-32">
       <Header />
 
       <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Receipt Summary on top for mobile, left on desktop */}
+        {/* Receipt Category and ID */}
         <div className="bg-[#1a1a1a] rounded-xl p-6 mb-6 border border-gray-800 md:col-span-3 md:mb-0 md:order-1">
           <div className="flex items-center gap-3">
             <Store size={24} className="text-blue-400" />
@@ -510,7 +509,7 @@ const ResultsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Receipt Items - Left 2/3 desktop, below summary on mobile */}
+        {/* Receipt Items on left */}
         <div className="space-y-6 md:col-span-2 md:order-2">
           <div className="bg-[#1a1a1a] rounded-xl border border-gray-800">
             <div className="p-4 border-b border-gray-800 flex items-center justify-between">
@@ -523,7 +522,6 @@ const ResultsPage: React.FC = () => {
                 Add Item
               </button>
             </div>
-
             <div className="p-4 space-y-3">
               {receiptData.lines.map((item) => (
                 <div
@@ -554,7 +552,6 @@ const ResultsPage: React.FC = () => {
                             </button>
                           )}
                         </div>
-
                         <p className="text-sm text-gray-400">
                           {item.amount === 0 ? (
                             <span className="text-green-400 font-medium">
@@ -577,7 +574,6 @@ const ResultsPage: React.FC = () => {
                             </span>
                           )}
                         </span>
-
                         <button
                           onClick={() => toggleActions(item.line_id)}
                           className="p-2 text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-lg transition"
@@ -586,7 +582,6 @@ const ResultsPage: React.FC = () => {
                         </button>
                       </div>
                     </div>
-
                     {hasExpandableContent(item) &&
                       expandedItems.has(item.line_id) && (
                         <div className="overflow-hidden transition-all duration-300 ease-in-out">
@@ -610,7 +605,6 @@ const ResultsPage: React.FC = () => {
                           </div>
                         </div>
                       )}
-
                     {showActions === item.line_id && (
                       <div className="flex gap-2 pt-3 border-t border-gray-700">
                         <button
@@ -636,7 +630,7 @@ const ResultsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Bill Summary - Right 1/3 desktop, below on mobile */}
+        {/* Bill Summary on right */}
         <div className="bg-[#1a1a1a] rounded-xl border border-gray-800 p-6 md:col-span-1 md:order-3">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold">Bill Summary</h3>
@@ -648,13 +642,11 @@ const ResultsPage: React.FC = () => {
               Edit Totals
             </button>
           </div>
-
           <div className="space-y-3 text-gray-300">
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span>RM{receiptData.totals.subtotal.toFixed(2)}</span>
             </div>
-
             {receiptData.totals.tax && receiptData.totals.tax > 0 && (
               <div className="flex justify-between">
                 <span>
@@ -666,7 +658,6 @@ const ResultsPage: React.FC = () => {
                 <span>RM{receiptData.totals.tax.toFixed(2)}</span>
               </div>
             )}
-
             {receiptData.totals.service_charge &&
               receiptData.totals.service_charge > 0 && (
                 <div className="flex justify-between">
@@ -679,14 +670,12 @@ const ResultsPage: React.FC = () => {
                   <span>RM{receiptData.totals.service_charge.toFixed(2)}</span>
                 </div>
               )}
-
             {(receiptData.totals.discount || 0) > 0 && (
               <div className="flex justify-between text-red-300">
                 <span>Discount</span>
                 <span>-RM{(receiptData.totals.discount || 0).toFixed(2)}</span>
               </div>
             )}
-
             {receiptData.totals.rounding &&
               receiptData.totals.rounding !== 0 && (
                 <div className="flex justify-between">
@@ -698,12 +687,11 @@ const ResultsPage: React.FC = () => {
                         : "text-green-300"
                     }
                   >
-                    {receiptData.totals.rounding > 0 ? "+" : ""}
-                    RM{receiptData.totals.rounding.toFixed(2)}
+                    {receiptData.totals.rounding > 0 ? "+" : ""}RM
+                    {receiptData.totals.rounding.toFixed(2)}
                   </span>
                 </div>
               )}
-
             <div className="border-t border-gray-600 pt-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -740,28 +728,430 @@ const ResultsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Add Item Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          {/* Modal content (you can keep your existing code here) */}
+          <div className="bg-gray-800 rounded-xl p-6 w-full max-w-md border border-gray-700">
+            <h3 className="text-xl font-semibold mb-4">Add New Item</h3>
+
+            <div className="space-y-4">
+              <input
+                type="text"
+                value={newItem.name}
+                onChange={(e) =>
+                  setNewItem((prev) => ({ ...prev, name: e.target.value }))
+                }
+                placeholder="Item name"
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400"
+              />
+
+              <input
+                type="number"
+                value={newItem.amount === 0 ? "" : newItem.amount}
+                onChange={(e) =>
+                  setNewItem((prev) => ({
+                    ...prev,
+                    amount:
+                      e.target.value === ""
+                        ? 0
+                        : parseFloat(e.target.value) || 0,
+                  }))
+                }
+                onFocus={(e) => e.target.select()}
+                placeholder="Amount (RM)"
+                step="0.01"
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400"
+              />
+
+              <input
+                type="number"
+                value={newItem.qty === 0 ? "" : newItem.qty}
+                onChange={(e) =>
+                  setNewItem((prev) => ({
+                    ...prev,
+                    qty:
+                      e.target.value === ""
+                        ? 1
+                        : Math.max(1, parseInt(e.target.value) || 1),
+                  }))
+                }
+                onFocus={(e) => e.target.select()}
+                placeholder="Quantity"
+                min="1"
+                className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400"
+              />
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={handleAddItem}
+                disabled={!newItem.name.trim() || newItem.amount <= 0}
+                className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 py-3 rounded-lg font-semibold transition-colors"
+              >
+                Add Item
+              </button>
+              <button
+                onClick={() => {
+                  setShowAddModal(false);
+                  setNewItem({ name: "", amount: 0, qty: 1 });
+                }}
+                className="flex-1 bg-gray-600 hover:bg-gray-700 py-3 rounded-lg font-semibold transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
       {/* Edit Item Modal */}
       {editingItem && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          {/* Modal content (you can keep your existing code here) */}
+          <div className="bg-[#1a1a1a] rounded-xl p-6 max-w-md w-full border border-gray-700">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-white">Edit Item</h3>
+              <button
+                onClick={handleCancelEdit}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Item Name
+                </label>
+                <input
+                  type="text"
+                  value={editForm.name}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({
+                      ...prev,
+                      name: e.target.value,
+                    }))
+                  }
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                  placeholder="Enter item name"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Quantity
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.qty === 0 ? "" : editForm.qty.toString()}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      console.log("🔍 Qty input value:", value);
+
+                      if (value === "") {
+                        setEditForm((prev) => ({ ...prev, qty: 0 }));
+                      } else if (/^\d+$/.test(value)) {
+                        const numValue = parseInt(value);
+                        setEditForm((prev) => ({ ...prev, qty: numValue }));
+                      }
+                    }}
+                    onBlur={() => {
+                      if (editForm.qty === 0 || editForm.qty < 1) {
+                        setEditForm((prev) => ({ ...prev, qty: 1 }));
+                      }
+                    }}
+                    onFocus={(e) => e.target.select()}
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                    placeholder="1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Unit Price (RM)
+                  </label>
+                  <input
+                    type="number"
+                    value={editForm.amount === 0 ? "" : editForm.amount}
+                    onChange={(e) =>
+                      setEditForm((prev) => ({
+                        ...prev,
+                        amount:
+                          e.target.value === ""
+                            ? 0
+                            : parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                    onFocus={(e) => e.target.select()} // ✅ Fix: Select all on focus
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                    step="0.01"
+                    min="0"
+                    placeholder="0.00"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Total: RM{(editForm.amount * editForm.qty).toFixed(2)}{" "}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={handleSaveEdit}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 py-3 px-4 rounded-lg font-semibold text-white flex items-center justify-center gap-2 transition-colors"
+                >
+                  <Save size={18} />
+                  Save Changes
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  className="flex-1 bg-gray-600 hover:bg-gray-700 py-3 px-4 rounded-lg font-semibold text-white transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
-      {/* Edit Totals Modal */}
+      {/* Edit Totals Modal with Percentage Support */}
       {editingTotals && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          {/* Modal content (you can keep your existing code here) */}
+          <div className="bg-[#1a1a1a] rounded-xl p-6 max-w-lg w-full border border-gray-700">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-semibold text-white">
+                Edit Bill Totals
+              </h3>
+              <button
+                onClick={handleCancelEdit}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {/* Tax Section */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-3">
+                  Tax (SST)
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="relative">
+                    <Percent className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                    <input
+                      type="number"
+                      value={
+                        totalsForm.taxPercent === 0 ? "" : totalsForm.taxPercent
+                      }
+                      onChange={(e) =>
+                        handleTaxPercentChange(
+                          e.target.value === ""
+                            ? 0
+                            : parseFloat(e.target.value) || 0
+                        )
+                      }
+                      className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                      step="0.1"
+                      min="0"
+                      placeholder="0.0%"
+                    />
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-gray-400">
+                      RM
+                    </span>
+                    <input
+                      type="number"
+                      value={
+                        totalsForm.taxAmount === 0 ? "" : totalsForm.taxAmount
+                      }
+                      onChange={(e) =>
+                        handleTaxAmountChange(
+                          e.target.value === ""
+                            ? 0
+                            : parseFloat(e.target.value) || 0
+                        )
+                      }
+                      className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                      step="0.01"
+                      min="0"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Service Charge Section */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-3">
+                  Service Charge
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="relative">
+                    <Percent className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                    <input
+                      type="number"
+                      value={
+                        totalsForm.servicePercent === 0
+                          ? ""
+                          : totalsForm.servicePercent
+                      }
+                      onChange={(e) =>
+                        handleServicePercentChange(
+                          e.target.value === ""
+                            ? 0
+                            : parseFloat(e.target.value) || 0
+                        )
+                      }
+                      className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                      step="0.1"
+                      min="0"
+                      placeholder="0.0%"
+                    />
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-gray-400">
+                      RM
+                    </span>
+                    <input
+                      type="number"
+                      value={
+                        totalsForm.serviceAmount === 0
+                          ? ""
+                          : totalsForm.serviceAmount
+                      }
+                      onChange={(e) =>
+                        handleServiceAmountChange(
+                          e.target.value === ""
+                            ? 0
+                            : parseFloat(e.target.value) || 0
+                        )
+                      }
+                      className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                      step="0.01"
+                      min="0"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Discount Section */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-3">
+                  Discount
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="relative">
+                    <Percent className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                    <input
+                      type="number"
+                      value={
+                        totalsForm.discountPercent === 0
+                          ? ""
+                          : totalsForm.discountPercent
+                      }
+                      onChange={(e) =>
+                        handleDiscountPercentChange(
+                          e.target.value === ""
+                            ? 0
+                            : parseFloat(e.target.value) || 0
+                        )
+                      }
+                      className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                      step="0.1"
+                      min="0"
+                      placeholder="0.0%"
+                    />
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-3 text-gray-400">
+                      RM
+                    </span>
+                    <input
+                      type="number"
+                      value={
+                        totalsForm.discountAmount === 0
+                          ? ""
+                          : totalsForm.discountAmount
+                      }
+                      onChange={(e) =>
+                        handleDiscountAmountChange(
+                          e.target.value === ""
+                            ? 0
+                            : parseFloat(e.target.value) || 0
+                        )
+                      }
+                      className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                      step="0.01"
+                      min="0"
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Rounding */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-3">
+                  Rounding (RM)
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-3 text-gray-400">
+                    RM
+                  </span>
+                  <input
+                    type="number"
+                    value={totalsForm.rounding === 0 ? "" : totalsForm.rounding}
+                    onChange={(e) =>
+                      setTotalsForm((prev) => ({
+                        ...prev,
+                        rounding: parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                    className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                    step="0.01"
+                    placeholder="0.00"
+                  />
+                </div>
+              </div>
+
+              {/* New Total Preview */}
+              <div className="bg-gray-800/30 rounded-lg p-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-400">New Total:</span>
+                  <span className="text-green-400 font-bold text-lg">
+                    RM{calculateNewTotal().toFixed(2)}
+                  </span>
+                </div>
+                <div className="text-xs text-gray-500 mt-1">
+                  Subtotal: RM{receiptData.totals.subtotal.toFixed(2)} + Tax: RM
+                  {totalsForm.taxAmount.toFixed(2)} + Service: RM
+                  {totalsForm.serviceAmount.toFixed(2)} + Rounding: RM
+                  {totalsForm.rounding.toFixed(2)} - Discount: RM
+                  {totalsForm.discountAmount.toFixed(2)}
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={handleSaveTotals}
+                  className="flex-1 bg-orange-600 hover:bg-orange-700 py-3 px-4 rounded-lg font-semibold text-white flex items-center justify-center gap-2 transition-colors"
+                >
+                  <Save size={18} />
+                  Save Totals
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  className="flex-1 bg-gray-600 hover:bg-gray-700 py-3 px-4 rounded-lg font-semibold text-white transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
-
-      {/* AI Assistant */}
       {showAIAssistant && (
         <AIAssistant
           onCommand={handleVoiceCommand}
@@ -769,13 +1159,6 @@ const ResultsPage: React.FC = () => {
           isOpen={showAIAssistant}
           onClose={() => setShowAIAssistant(false)}
         />
-      )}
-
-      {/* Assign People Modal */}
-      {showAssignment && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          {/* Modal content (you can keep your existing code here) */}
-        </div>
       )}
     </div>
   );
