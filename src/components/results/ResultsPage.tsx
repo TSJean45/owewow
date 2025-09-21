@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Edit3,
   Trash2,
@@ -70,6 +70,7 @@ interface ResultTotals {
 
 const ResultsPage: React.FC = () => {
   const { receiptId } = useParams<{ receiptId: string }>();
+  const navigate = useNavigate();
 
   const [receiptData, setReceiptData] = useState<ReceiptData | null>(null);
   const [editingItem, setEditingItem] = useState<string | null>(null);
@@ -80,7 +81,6 @@ const ResultsPage: React.FC = () => {
   const [showActions, setShowActions] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [editingTotals, setEditingTotals] = useState(false);
   const [totalsForm, setTotalsForm] = useState({
     taxPercent: 0,
@@ -116,7 +116,7 @@ const ResultsPage: React.FC = () => {
 
   if (!receiptData) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
         <Header />
         <div className="text-center">
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center animate-pulse">
@@ -190,7 +190,6 @@ const ResultsPage: React.FC = () => {
       setEditForm({ name: item.name, amount: item.amount, qty: item.qty });
       setEditingItem(lineId);
       setShowActions(null);
-      setShowEditModal(true);
     }
   };
 
@@ -285,7 +284,6 @@ const ResultsPage: React.FC = () => {
   };
 
   const handleCancelEdit = () => {
-    setShowEditModal(false);
     setShowAddModal(false);
     setEditingItem(null);
     setEditForm({ name: "", amount: 0, qty: 1 });
@@ -334,7 +332,6 @@ const ResultsPage: React.FC = () => {
 
     const updatedLines = [...receiptData.lines, newLine];
 
-    // ✅ ADD THIS: Smart recalculation with tax/service percentages
     const updatedTotals = recalculateTotals(updatedLines, receiptData.totals);
     const updatedData = {
       ...receiptData,
@@ -479,7 +476,6 @@ const ResultsPage: React.FC = () => {
     }
   };
 
-  // Only show expandable if has components (not description that duplicates name)
   const hasExpandableContent = (item: ResultLine) => {
     return item.components && item.components.length > 0;
   };
@@ -499,7 +495,6 @@ const ResultsPage: React.FC = () => {
       <Header />
 
       <div className="max-w-4xl mx-auto px-4 py-6">
-        {/* Header Info */}
         <div className="bg-[#1a1a1a] rounded-xl p-6 mb-6 border border-gray-800">
           <div className="flex items-center gap-3">
             <Store size={24} className="text-blue-400" />
@@ -566,25 +561,21 @@ const ResultsPage: React.FC = () => {
                               Complimentary service
                             </span>
                           ) : item.is_bundle ? (
-                            `Bundle price • Qty: ${item.qty}`
+                            `Bundle price - Qty ${item.qty}`
                           ) : (
-                            `Qty: ${item.qty} • RM${(
-                              item.amount / item.qty
-                            ).toFixed(2)} each`
+                            `Qty ${item.qty} × RM${item.amount.toFixed(2)} each`
                           )}
                         </p>
                       </div>
                       <div className="flex items-start gap-3">
-                        <span
-                          className={`font-bold text-lg ${
-                            item.amount === 0
-                              ? "text-green-400"
-                              : "text-green-400"
-                          }`}
-                        >
-                          {item.amount === 0
-                            ? "FREE"
-                            : `RM${item.amount.toFixed(2)}`}
+                        <span className="font-bold text-lg">
+                          {item.amount === 0 ? (
+                            <span className="text-green-400">FREE</span>
+                          ) : (
+                            <span className="text-green-400">
+                              RM{(item.amount * item.qty).toFixed(2)}{" "}
+                            </span>
+                          )}
                         </span>
 
                         <button
@@ -747,8 +738,8 @@ const ResultsPage: React.FC = () => {
           </button>
 
           <button
-            onClick={() => setShowAssignment(true)}
-            className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2 transition-all"
+            onClick={() => navigate(`/assignment/${receiptId}`)}
+            className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
           >
             <Users size={20} />
             Assign People
@@ -832,7 +823,7 @@ const ResultsPage: React.FC = () => {
       )}
 
       {/* Edit Item Modal */}
-      {showEditModal && (
+      {editingItem && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-[#1a1a1a] rounded-xl p-6 max-w-md w-full border border-gray-700">
             <div className="flex items-center justify-between mb-6">
@@ -870,21 +861,32 @@ const ResultsPage: React.FC = () => {
                     Quantity
                   </label>
                   <input
-                    type="number"
-                    value={editForm.qty}
-                    onChange={(e) =>
-                      setEditForm((prev) => ({
-                        ...prev,
-                        qty: parseInt(e.target.value) || 1,
-                      }))
-                    }
+                    type="text"
+                    value={editForm.qty === 0 ? "" : editForm.qty.toString()}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      console.log("🔍 Qty input value:", value);
+
+                      if (value === "") {
+                        setEditForm((prev) => ({ ...prev, qty: 0 }));
+                      } else if (/^\d+$/.test(value)) {
+                        const numValue = parseInt(value);
+                        setEditForm((prev) => ({ ...prev, qty: numValue }));
+                      }
+                    }}
+                    onBlur={() => {
+                      if (editForm.qty === 0 || editForm.qty < 1) {
+                        setEditForm((prev) => ({ ...prev, qty: 1 }));
+                      }
+                    }}
+                    onFocus={(e) => e.target.select()}
                     className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
-                    min="1"
+                    placeholder="1"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Total Amount (RM)
+                    Unit Price (RM)
                   </label>
                   <input
                     type="number"
@@ -898,11 +900,15 @@ const ResultsPage: React.FC = () => {
                             : parseFloat(e.target.value) || 0,
                       }))
                     }
+                    onFocus={(e) => e.target.select()} // ✅ Fix: Select all on focus
                     className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
                     step="0.01"
                     min="0"
                     placeholder="0.00"
                   />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Total: RM{(editForm.amount * editForm.qty).toFixed(2)}{" "}
+                  </p>
                 </div>
               </div>
 

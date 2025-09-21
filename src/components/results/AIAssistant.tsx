@@ -374,7 +374,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl max-w-md w-full border border-gray-600 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Header with Gradient */}
-        <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-green-500 p-6 text-center relative">
+        <div className=" p-6 text-center relative">
           <div className="absolute top-4 right-4">
             <button
               onClick={onClose}
@@ -383,24 +383,6 @@ const AIAssistant: React.FC<AIAssistantProps> = ({
               <X size={20} />
             </button>
           </div>
-
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <div className="relative">
-              <Sparkles className="text-white" size={28} />
-              {isListening && (
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
-              )}
-            </div>
-            <h3 className="text-2xl font-bold text-white">
-              AI Voice Assistant
-            </h3>
-          </div>
-
-          <p className="text-white/80 text-sm">
-            {isListening
-              ? "Listening to your commands..."
-              : "Ready to help with bulk edits"}
-          </p>
         </div>
 
         {!isSupported ? (

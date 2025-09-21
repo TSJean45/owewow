@@ -18,6 +18,7 @@ import Footer from "./components/Footer";
 import SplitChoice from "./components/SplitChoice";
 import QuickSplit from "./components/QuickSplit";
 import ResultsPage from "./components/results/ResultsPage";
+import AssignmentPage from "./components/assignment/AssignmentPage";
 
 const SplitChoiceWrapper: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const SplitChoiceWrapper: React.FC = () => {
       <SplitChoice
         onChoice={(choice) => {
           if (choice === "quick") {
-            navigate("/quick-split"); // ✅ Use navigate instead
+            navigate("/quick-split");
           } else {
             alert("Sign-in flow coming soon!");
           }
@@ -89,6 +90,7 @@ function App() {
               }
             />
             <Route path="/results/:receiptId" element={<ResultsPage />} />
+            <Route path="/assignment/:receiptId" element={<AssignmentPage />} />
           </Routes>
         </div>
       </div>
