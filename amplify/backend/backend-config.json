@@ -55,6 +55,40 @@
       "type": "manual"
     }
   },
+  "parameters": {
+    "AMPLIFY_function_receiptProxy_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "receiptProxy"
+        }
+      ]
+    },
+    "AMPLIFY_function_receiptProxy_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "receiptProxy"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    }
+  },
   "storage": {
     "owewowStorage": {
       "dependsOn": [],

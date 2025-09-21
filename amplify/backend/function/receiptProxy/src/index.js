@@ -6,12 +6,34 @@ exports.handler = async (event) => {
   try {
     console.log("Received event:", JSON.stringify(event));
     const body = JSON.parse(event.body || "{}");
-    const { chat_input, object_key, bucket_name, group_id, step, user_input } =
-      body;
+    const {
+      chat_input,
+      object_key,
+      bucket_name,
+      group_id,
+      step,
+      user_input,
+      voice_command,
+      receiptItems,
+    } = body;
 
     let result;
 
-    if (chat_input || user_input) {
+    if (voice_command) {
+      // NEW: Voice command flow
+      console.log("🎤 Routing to voice command processor");
+      const command = new InvokeCommand({
+        FunctionName:
+          "arn:aws:lambda:ap-southeast-5:386782865665:function:owewow-voice-command-processor",
+        Payload: JSON.stringify({
+          body: JSON.stringify({
+            text: voice_command,
+            receiptItems: receiptItems || [],
+          }),
+        }),
+      });
+      result = await lambdaClient.send(command);
+    } else if (chat_input || user_input) {
       // Chat flow
       console.log("Routing to conversational AI in Malaysia");
       const command = new InvokeCommand({
@@ -40,7 +62,6 @@ exports.handler = async (event) => {
         }),
       };
 
-      // 🔥 DEBUG: Log what we're sending to textract
       console.log(
         "📤 SENDING TO TEXTRACT:",
         JSON.stringify(textractPayload, null, 2)
@@ -53,18 +74,14 @@ exports.handler = async (event) => {
       });
 
       result = await lambdaClient.send(command);
-
-      // 🔥 DEBUG: Log what we got back
       console.log("📥 TEXTRACT RESPONSE:", result);
     } else {
       throw new Error(
-        "Missing required parameters: need either chat_input or object_key"
+        "Missing required parameters: need either chat_input, object_key, or voice_command"
       );
     }
 
     const payloadString = new TextDecoder().decode(result.Payload);
-
-    // 🔥 DEBUG: Log final response
     console.log("🎯 FINAL RESPONSE:", payloadString);
 
     return {

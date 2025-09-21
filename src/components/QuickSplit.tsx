@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { post } from "aws-amplify/api";
 import { useNavigate } from "react-router-dom";
-// import { uploadData } from "aws-amplify/storage";
+import { uploadData } from "aws-amplify/storage";
 import { Camera, Upload } from "lucide-react";
 
 import Header from "./Header";
@@ -57,13 +57,13 @@ const QuickSplit: React.FC = () => {
 
       console.log("📤 Uploading to S3:", fileKey);
 
-      // const result = await uploadData({
-      //   key: fileKey,
-      //   data: file,
-      //   options: {
-      //     accessLevel: "guest",
-      //   },
-      // });
+      await uploadData({
+        key: fileKey,
+        data: file,
+        options: {
+          accessLevel: "guest",
+        },
+      });
 
       console.log("✅ Upload successful:", fileKey);
       return fileKey;

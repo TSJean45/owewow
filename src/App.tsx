@@ -19,6 +19,24 @@ import SplitChoice from "./components/SplitChoice";
 import QuickSplit from "./components/QuickSplit";
 import ResultsPage from "./components/results/ResultsPage";
 
+const SplitChoiceWrapper: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="w-screen max-w-full">
+      <SplitChoice
+        onChoice={(choice) => {
+          if (choice === "quick") {
+            navigate("/quick-split"); // ✅ Use navigate instead
+          } else {
+            alert("Sign-in flow coming soon!");
+          }
+        }}
+      />
+    </div>
+  );
+};
+
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
 
@@ -58,24 +76,8 @@ function App() {
         <div className="relative z-10 min-h-screen w-full">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/split-choice"
-              element={
-                <div className="w-screen max-w-full">
-                  {" "}
-                  {/* Full width wrapper */}
-                  <SplitChoice
-                    onChoice={(choice) => {
-                      if (choice === "quick") {
-                        window.location.href = "/quick-split";
-                      } else {
-                        alert("Sign-in flow coming soon!");
-                      }
-                    }}
-                  />
-                </div>
-              }
-            />
+            <Route path="/split-choice" element={<SplitChoiceWrapper />} />
+
             <Route
               path="/quick-split"
               element={
