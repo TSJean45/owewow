@@ -42,7 +42,7 @@ Built with AWS Lambda and API Gateway, OweWow scales automatically to any group 
 
 ## Future Features (Coming Soon!)
 
-- **Multi-language support**: Bill splitting in different languages and currencies.  
+- **Fully Automated Voice-Powered receipt generation & assignment**: Our advanced AI will automatically generate detailed receipt entries and assign items to participants with near-human accuracy—eliminating manual input altogether with JUST ONE VOICE RECORDING.
 - **Multi-language support**: Bill splitting in different languages and currencies.    
 - **Real-time Payment Tracking & Reminders**: Track who’s paid or pending with live UI updates and automated gentle payment reminders, improving collection rates and accountability.
 - **Direct payment integration**: In-app wallet or bank integration for seamless settlements.  
