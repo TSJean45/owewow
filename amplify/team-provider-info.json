@@ -15,7 +15,7 @@
       "function": {
         "receiptProxy": {
           "deploymentBucketName": "amplify-owewow-dev-92a00-deployment",
-          "s3Key": "amplify-builds/receiptProxy-36554875476a704c372f-build.zip"
+          "s3Key": "amplify-builds/receiptProxy-7a796571643272786d79-build.zip"
         }
       },
       "api": {

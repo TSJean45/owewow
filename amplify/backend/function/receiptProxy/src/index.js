@@ -1,10 +1,9 @@
 const AWS = require("aws-sdk");
+const dynamodb = new AWS.DynamoDB();
 const { LambdaClient, InvokeCommand } = require("@aws-sdk/client-lambda");
 
 exports.handler = async (event) => {
   const lambdaClient = new LambdaClient({ region: "ap-southeast-5" });
-  const dynamodb = new AWS.DynamoDB();
-
   try {
     console.log("Received event:", JSON.stringify(event));
     const body = JSON.parse(event.body || "{}");
